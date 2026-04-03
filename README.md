@@ -1,4 +1,4 @@
-# ◈ NeoBank — CSRF Attack Simulation
+# ◈ PaisaLeloBank — CSRF Attack Simulation
 > Educational security demo: See a CSRF attack succeed, then watch it get blocked.
 
 ---
