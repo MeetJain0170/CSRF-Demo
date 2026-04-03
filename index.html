@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bombay Diaries | Top 5 Unforgettable Things to Do in Mumbai</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    :root {
+      --primary: #FF5A5F;
+      --primary-hover: #E0484D;
+      --text-dark: #1A1A1A;
+      --text-light: #5A5A5A;
+      --bg-color: #F4F5F7;
+      --white: #FFFFFF;
+      --border-color: #EAEAEA;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-dark);
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAVBAR ─── */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      padding: 20px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      text-decoration: none;
+      letter-spacing: 1px;
+    }
+
+    .nav-logo span {
+      color: var(--primary);
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-dark);
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    /* ─── HERO SECTION ─── */
+    .hero {
+      position: relative;
+      height: 80vh;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.8)), url('/assets/Skyline.png') 
+      center/cover fixed;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      padding: 0 20px;
+      margin-top: 60px; /* Offset for navbar */
+    }
+
+    .hero-content {
+      max-width: 900px;
+      animation: fadeUp 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tagline {
+      display: inline-block;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      background: rgba(255, 215, 0, 0.2);
+      color: #FFD700;
+      padding: 8px 16px;
+      border-radius: 50px;
+      border: 1px solid rgba(255, 215, 0, 0.4);
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      line-height: 1.1;
+      margin-bottom: 25px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+
+    .author-meta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      font-size: 0.95rem;
+      color: #DDD;
+    }
+
+    .author-meta img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--white);
+      object-fit: cover;
+    }
+
+    /* ─── LAYOUT ─── */
+    .layout-wrapper {
+      max-width: 1200px;
+      margin: -80px auto 100px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ─── MAIN CONTENT ─── */
+    .container {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 50px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+    }
+
+    .intro-text {
+      font-size: 1.25rem;
+      color: var(--text-light);
+      margin-bottom: 50px;
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      border-left: 4px solid var(--primary);
+      padding-left: 20px;
+    }
+
+    .list-item {
+      margin-bottom: 70px;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 50px;
+    }
+
+    .list-item:last-of-type {
+      margin-bottom: 0;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+
+    .item-image {
+      width: 100%;
+      height: 400px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 30px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: transform 0.5s ease;
+    }
+
+    .item-image:hover {
+      transform: scale(1.02);
+    }
+
+    .item-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .item-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 4rem;
+      font-weight: 800;
+      color: transparent;
+      -webkit-text-stroke: 2px var(--primary);
+      margin-right: 25px;
+      line-height: 1;
+    }
+
+    .list-item h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: var(--text-dark);
+      line-height: 1.2;
+    }
+
+    .list-item p {
+      color: var(--text-light);
+      font-size: 1.1rem;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .widget {
+      background: var(--white);
+      border-radius: 20px;
+      padding: 35px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.06);
+    }
+
+    .widget-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .widget-title::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 40px;
+      height: 3px;
+      background: var(--primary);
+    }
+
+    .about-author img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 15px;
+    }
+
+    .about-author p {
+      font-size: 0.95rem;
+      color: var(--text-light);
+      margin-bottom: 15px;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+    }
+
+    .social-icons a {
+      color: var(--text-dark);
+      font-size: 1.2rem;
+      transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+      color: var(--primary);
+    }
+
+    .newsletter input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      margin-bottom: 15px;
+      font-family: inherit;
+    }
+
+    .newsletter button {
+      width: 100%;
+      padding: 12px;
+      background: var(--text-dark);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .newsletter button:hover {
+      background: var(--primary);
+    }
+
+    /* ─── THE LURE (MALICIOUS ADVERTISEMENT) ─── */
+    .sponsored-lure {
+      display: block;
+      text-decoration: none;
+      background: radial-gradient(circle at top right, #1a0535, #0a0a2e);
+      border-radius: 16px;
+      padding: 50px 40px;
+      margin: 60px 0;
+      text-align: center;
+      color: white;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(10, 10, 46, 0.4);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .sponsored-lure:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 30px 60px rgba(10, 10, 46, 0.7);
+    }
+
+    .sponsored-lure::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 50%; height: 100%;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.15), transparent);
+      transform: skewX(-20deg);
+      animation: shimmer 3s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      20% { left: 200%; }
+      100% { left: 200%; }
+    }
+
+    .lure-tag {
+      position: absolute;
+      top: 20px; right: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(5px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .lure-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.8rem;
+      color: #f59e0b;
+      margin-bottom: 15px;
+      text-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
+      line-height: 1.1;
+    }
+
+    .lure-desc {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 30px;
+      max-width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .lure-btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: #000;
+      font-weight: 800;
+      border-radius: 50px;
+      font-size: 1.05rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 8px 25px rgba(245, 158, 11, 0.5);
+      transition: all 0.3s;
+    }
+
+    .sponsored-lure:hover .lure-btn {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--text-dark);
+      color: var(--white);
+      text-align: center;
+      padding: 60px 20px;
+      margin-top: 60px;
+    }
+
+    footer p {
+      color: #999;
+      font-size: 0.9rem;
+      margin-top: 20px;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 992px) {
+      .layout-wrapper {
+        grid-template-columns: 1fr;
+      }
+      .hero h1 { font-size: 3.5rem; }
+    }
+
+    @media (max-width: 768px) {
+      .container { padding: 30px; }
+      .nav-links { display: none; } /* Simplified for mobile */
+      .item-number { font-size: 2.5rem; }
+      .list-item h2 { font-size: 1.8rem; }
+      .lure-title { font-size: 2rem; }
+      .item-image { height: 250px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="#" class="nav-logo">Bombay<span>Diaries</span></a>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">Destinations</a></li>
+      <li><a href="#">Travel Guides</a></li>
+      <li><a href="#">About</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-content">
+      <div class="tagline">City of Dreams</div>
+      <h1>Top 5 Unforgettable Things to Do in Mumbai</h1>
+      <div class="author-meta">
+        <img src="/assets/author.png" alt="Author">
+        <span>By <strong>Jameel Jamali</strong> • Published on April 2, 2026</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout-wrapper">
+    <main class="container">
+      <p class="intro-text">
+        From the salty breeze of the Arabian Sea to the poetic chaos of its ancient bazaars, Mumbai is a city that never pauses. Whether you're a first-time visitor or a returning wanderer, here is your curated guide to the soul of Bombay.
+      </p>
+
+      <div class="list-item">
+        <img src="/assets/marines.png" alt="Marine Drive" class="item-image">
+        <div class="item-header">
+          <span class="item-number">01</span>
+          <h2>Walk the Queen's Necklace at Twilight</h2>
+        </div>
+        <p>Begin your journey at Marine Drive. As the sun dips below the horizon, the sweeping C-shaped boulevard lights up, resembling a string of glowing pearls against the dark ocean. It is the perfect place to sit, sip cutting chai, and watch the city breathe.</p>
+      </div>
+
+      <div class="list-item">
+        <img src="/assets/gateway.png" alt="Gateway of India" class="item-image">
+        <div class="item-header">
+          <span class="item-number">02</span>
+          <h2>Marvel at the Gateway of India</h2>
+        </div>
+        <p>Standing tall at the edge of the water, this basalt arch is Mumbai's most iconic monument. Built to welcome royalty, it now welcomes thousands of dreamers daily. Right across from it sits the magnificent Taj Mahal Palace Hotel—a masterpiece of architecture.</p>
+      </div>
+
+      <a href="attack.html" target="_blank" class="sponsored-lure">
+        <div class="lure-tag"><i class="fa-solid fa-bolt"></i> Local Promotion</div>
+        <h3 class="lure-title">Win an iPhone 17 Pro Max!</h3>
+        <p class="lure-desc">
+          We are giving away 5 brand-new devices to lucky readers currently located in Mumbai. Claim yours before the local inventory runs out!
+        </p>
+        <div class="lure-btn">Check Eligibility Now ➔</div>
+      </a>
+
+      <div class="list-item">
+        <img src="/assets/colaba.png" alt="Colaba Causeway" class="item-image">
+        <div class="item-header">
+          <span class="item-number">03</span>
+          <h2>Hunt for Antiques in Colaba Causeway</h2>
+        </div>
+        <p>A sensory overload in the best way possible. This bustling street market is a treasure trove of oxidized jewelry, vintage brass items, bohemian clothing, and rare artifacts. Don't forget to haggle, and wrap up your shopping with a cold beer at the legendary Cafe Mondegar.</p>
+      </div>
+
+      <div class="list-item">
+        <img src="/assets/SeaLink.png" alt="Bandra-Worli Sea Link" class="item-image">
+        <div class="item-header">
+          <span class="item-number">04</span>
+          <h2>Cross the Bandra-Worli Sea Link</h2>
+        </div>
+        <p>An engineering marvel that connects the suburbs to South Mumbai. Driving across these steel cables suspended over the open sea offers a futuristic, breathtaking view of the city's ever-growing skyline. Best experienced with the windows down and the music up.</p>
+      </div>
+
+      <div class="list-item">
+        <img src="/assets/Kala.png" alt="Kala Ghoda Art District" class="item-image">
+        <div class="item-header">
+          <span class="item-number">05</span>
+          <h2>Explore the Art District of Kala Ghoda</h2>
+        </div>
+        <p>The cultural heartbeat of the city. Stroll through streets lined with heritage buildings, contemporary art galleries, boutique cafes, and the famous Jehangir Art Gallery. If you visit in February, the entire precinct transforms into a massive open-air arts festival.</p>
+      </div>
+    </main>
+
+    <aside class="sidebar">
+      <div class="widget about-author">
+        <h3 class="widget-title">About the Author</h3>
+        <img src="/assets/author.png" alt="Jameel Jamali">
+        <p><strong>Jameel Jamali </strong> is a full-time wanderer, coffee addict, and architectural enthusiast. He spends most of his days getting delightfully lost in the alleyways of India's biggest cities.</p>
+        <div class="social-icons">
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-youtube"></i></a>
+        </div>
+      </div>
+
+      <div class="widget newsletter">
+        <h3 class="widget-title">Join the Journey</h3>
+        <p style="font-size: 0.9rem; color: #5A5A5A; margin-bottom: 15px;">Get the latest Mumbai itineraries and secret spots delivered straight to your inbox.</p>
+        <form action="#" onsubmit="event.preventDefault();">
+          <input type="email" placeholder="Your Email Address" required>
+          <button type="submit">Subscribe Now</button>
+        </form>
+      </div>
+    </aside>
+  </div>
+
+  <footer>
+    <h2>Bombay<span>Diaries</span></h2>
+    <p>&copy; 2026 Bombay Diaries Blog. All digital rights reserved. Wander responsibly.</p>
+  </footer>
+
+</body>
+</html>
