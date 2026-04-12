@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # NeoBank — CSRF attack simulation
 
 This project is an **educational security demo**. It simulates a small “bank” web app (PaisaLeloBank) and a **fake scam funnel**: a normal-looking travel page (`index.html`) hides a **sponsored link** to a **free iPhone** page (`attack.html`). That page submits a hidden form to your bank so you can show **Cross-Site Request Forgery (CSRF)** in two modes: protection **off** (the forged transfer can go through) and **on** (the server rejects requests without a valid CSRF token).
