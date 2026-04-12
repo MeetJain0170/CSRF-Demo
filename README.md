@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # NeoBank — CSRF attack simulation
 
 This project is an **educational security demo**. It simulates a small “bank” web app (PaisaLeloBank) and a **fake scam funnel**: a normal-looking travel page (`index.html`) hides a **sponsored link** to a **free iPhone** page (`attack.html`). That page submits a hidden form to your bank so you can show **Cross-Site Request Forgery (CSRF)** in two modes: protection **off** (the forged transfer can go through) and **on** (the server rejects requests without a valid CSRF token).
@@ -5,6 +6,10 @@ This project is an **educational security demo**. It simulates a small “bank�
 You also get a **fake money transfer** form on the bank dashboard as a side feature, so you can compare **legitimate** transfers (with a token when protection is on) against the **attack**.
 
 **CSRF mode is controlled from the bank UI** (checkbox that calls `POST /toggle-csrf`). You do **not** need to edit `csrfProtection` in `server.js` for normal demos.
+=======
+# ◈ PaisaLeloBank — CSRF Attack Simulation
+> Educational security demo: See a CSRF attack succeed, then watch it get blocked.
+>>>>>>> 094b105970fcaf4113e43b0e7fa5f7a38e660b05
 
 ---
 
