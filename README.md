@@ -1,106 +1,133 @@
-# ◈ NeoBank — CSRF Attack Simulation
-> Educational security demo: See a CSRF attack succeed, then watch it get blocked.
+# NeoBank — CSRF attack simulation
+
+This project is an **educational security demo**. It simulates a small “bank” web app (PaisaLeloBank) and a **fake scam funnel**: a normal-looking travel page (`index.html`) hides a **sponsored link** to a **free iPhone** page (`attack.html`). That page submits a hidden form to your bank so you can show **Cross-Site Request Forgery (CSRF)** in two modes: protection **off** (the forged transfer can go through) and **on** (the server rejects requests without a valid CSRF token).
+
+You also get a **fake money transfer** form on the bank dashboard as a side feature, so you can compare **legitimate** transfers (with a token when protection is on) against the **attack**.
+
+**CSRF mode is controlled from the bank UI** (checkbox that calls `POST /toggle-csrf`). You do **not** need to edit `csrfProtection` in `server.js` for normal demos.
 
 ---
 
-## 📁 Project Structure
+## File layout
 
 ```
-csrf-demo/
-├── server.js           ← Express backend (CSRF toggle here)
-├── attack.html         ← Malicious page (open separately)
-├── package.json
-└── public/
-    ├── styles.css      ← Banking UI styles
-    └── app.js          ← Frontend logic
-```
-
----
-
-## 🚀 Quick Start
-
-```bash
-npm install
-node server.js
-```
-
-Open: http://localhost:3000
-
-For the attack page — open `attack.html` directly in browser,
-or serve it on port 5500:
-```bash
-npx serve -p 5500 .
-# Then visit: http://localhost:5500/attack.html
+Roleplay/
+├── server.js              # Express server: bank routes, CSRF check, /toggle-csrf, in-memory balance
+├── package.json           # npm dependencies and scripts
+├── package-lock.json      # Locked dependency versions (commit this)
+├── requirements.txt       # Human-readable list of runtime + packages (not for `pip`)
+├── index.html             # Decoy “travel” page with a link to the iPhone scam (attack.html)
+├── attack.html            # Malicious lure + hidden POST to the bank
+├── serve_static.js        # Optional tiny static helper (if you use it)
+├── public/
+│   ├── app.js             # Bank UI: transfers, live balance sync, CSRF toggle
+│   └── styles.css         # Bank styling
+└── assets/                # Images used by the attack / lure pages
 ```
 
 ---
 
-## 🎬 Demo Flow
+## Prerequisites
 
-### Step 1 — Show vulnerable state
-1. Ensure `csrfProtection = false` in `server.js` (default)
-2. Open http://localhost:3000 → Balance shows ₹10,000
-3. Note the red "CSRF Protection OFF" badge in nav
+1. **Install Node.js (LTS)**  
+   Download from [https://nodejs.org/](https://nodejs.org/).  
+   Confirm in a terminal:
 
-### Step 2 — Execute the attack
-1. Open `attack.html` in another tab
-2. Click "Claim My Prize" button
-3. Switch back to bank → balance drops to ₹5,000 💥
-4. Console shows: `Transfer executed: ₹5000 → hacker_account`
+   ```bash
+   node -v
+   npm -v
+   ```
 
-### Step 3 — Enable protection
-1. In `server.js`, change: `let csrfProtection = false;` → `true`
-2. Restart: `node server.js`
-3. Open http://localhost:3000 → Now shows green "CSRF Protection ON"
-4. Inspect page source → find hidden `csrf_token` in the form
+2. **Install project dependencies**  
+   This repo uses **npm**, not Python. The `requirements.txt` file only **describes** what you need; installing is done with:
 
-### Step 4 — Attack fails
-1. Click "Claim My Prize" again on attack.html
-2. Attack status shows: 🛡️ **Attack BLOCKED!**
-3. Bank balance unchanged
-4. Console shows: `CSRF ATTACK BLOCKED! Token mismatch or missing.`
+   ```bash
+   cd path/to/Roleplay
+   npm install
+   ```
 
-### Step 5 — Reset for next run
-Click the "↺ Reset Demo" button in the bank UI.
+   (That reads `package.json` / `package-lock.json` and installs `express`, `cookie-parser`, etc.)
 
 ---
 
-## 🔍 Burp Suite Integration
+## How to run
 
-1. Set Burp proxy: `127.0.0.1:8080`
-2. Configure browser proxy to match
-3. Turn on Intercept in Burp
+1. Start the bank API and static files served by Express:
 
-**Observe these requests:**
+   ```bash
+   node server.js
+   ```
 
-| Request | What you'll see |
-|---------|----------------|
-| `GET /` | HTML with embedded `csrf_token` (if protection ON) |
-| `POST /transfer` (legit) | `amount`, `recipient`, `csrf_token`, `Cookie: sessionId` |
-| `POST /transfer` (attack) | Same params but **no `csrf_token`** |
+   Or:
 
----
+   ```bash
+   npm start
+   ```
 
-## ⚙️ Toggle Protection
+2. Open the **bank** in the browser:
 
-In `server.js`, line ~25:
+   **http://localhost:3000**
 
-```js
-let csrfProtection = false;  // 🔴 Vulnerable
-let csrfProtection = true;   // 🛡️ Protected
-```
+3. Serve the **rest of the site** (so `index.html`, `attack.html`, and `assets/` resolve correctly) on **port 5500**. For example:
 
-Restart the server after changing.
+   ```bash
+   npx serve -p 5500 .
+   ```
 
----
+   Then open:
 
-## 💡 Key Insight
-
-> The browser automatically attaches session cookies to **every** request,  
-> even ones forged by malicious third-party pages.  
-> CSRF exploits this trust.  
-> The fix: include a **secret token** only the real page knows.
+   - **http://localhost:5500/** — decoy page (`index.html`)
+   - **http://localhost:5500/attack.html** — scam page (or reach it via the iPhone link on `index.html`)
 
 ---
 
-*"We didn't hack the system… we proved how easily it can be misled—and how simply it can be fixed."*
+## Burp Suite (Community Edition)
+
+1. **Download** Burp Suite **Community** from [https://portswigger.net/burp/communitydownload](https://portswigger.net/burp/communitydownload) and install it (free for learning and testing).
+
+2. Start Burp and use the **embedded browser** (simplest):
+
+   - Go to **Proxy** → **HTTP history** (you will see traffic here after browsing).
+   - Use **Proxy** → open **Intercept** if you want to stop each request, or browse with interception off and still inspect history.
+
+   Alternatively use **Open browser** / Burp’s preconfigured browser so traffic goes through Burp automatically (wording may vary slightly by Burp version).
+
+3. In that browser, visit:
+
+   - **http://localhost:3000** — bank  
+   - **http://localhost:5500** — decoy site and scam page  
+
+4. In **HTTP history**, look for **`POST /transfer`**: body fields like `amount`, `recipient`, and when CSRF is on, `csrf_token`. Compare a **normal** transfer from the bank form vs the **attack** from `attack.html`.
+
+---
+
+## Suggested demo flow
+
+1. Run **`node server.js`** and **`npx serve -p 5500 .`** as above.
+
+2. Open **`index.html` with Live Server** (VS Code “Go Live”) **or** use **http://localhost:5500** — same idea: you need a real HTTP origin so links and assets work.
+
+3. On the decoy page, click the **free iPhone** sponsored block (it opens `attack.html`).
+
+4. Switch to the **bank** tab (**http://localhost:3000**).
+
+5. **CSRF toggle (bank UI)**  
+   - **Off** — “scam” / forged request can succeed (classic vulnerable demo).  
+   - **On** — the same attack should be **blocked**; legitimate transfers from the bank still work because the page includes the CSRF token.
+
+6. Optionally use the bank’s **Fund Transfer** to move fake money and show a **clean** request next to the **attack** in Burp.
+
+---
+
+## npm scripts
+
+| Command        | Purpose              |
+|----------------|----------------------|
+| `npm start`    | Run `node server.js` |
+| `npm run dev`  | Run with `nodemon`   |
+
+---
+
+## Educational note
+
+Use this only against **your own machine** and this demo. CSRF is a real class of vulnerabilities; the goal here is to **understand** cookies, forged requests, and token-based defenses—not to target other people’s systems.

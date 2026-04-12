@@ -14,6 +14,8 @@
  *   3. Visit http://localhost:3000 — you'll see GET /
  *   4. Submit transfer — intercept POST /transfer
  *   5. Observe: amount, recipient, csrf_token (if protection ON)
+ *
+ * CSRF on/off: use the checkbox on the bank page (POST /toggle-csrf).
  */
 
 const express = require('express');
@@ -357,8 +359,7 @@ app.listen(PORT, () => {
   console.log(`║  Bank App  → http://localhost:${PORT}       ║`);
   console.log(`║  CSRF Mode → ${csrfProtection ? '🛡️  PROTECTED          ' : '🔴 VULNERABLE         '} ║`);
   console.log('╠══════════════════════════════════════════╣');
-  console.log('║  To toggle protection:                   ║');
-  console.log('║  Edit csrfProtection flag in server.js   ║');
+  console.log('║  Toggle CSRF: use checkbox on bank UI    ║');
   console.log('╠══════════════════════════════════════════╣');
   console.log('║  BURP SUITE:                             ║');
   console.log('║  Proxy → 127.0.0.1:8080                  ║');

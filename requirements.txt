@@ -1,0 +1,17 @@
+# NeoBank CSRF demo — dependency manifest (Node.js / npm).
+# Do NOT run: pip install -r requirements.txt  (this is not a Python project.)
+#
+# After installing Node.js:
+#   npm install          ← installs packages from package.json (not from this file’s lines)
+#
+# This file is a checklist; see README.md for full run instructions.
+#
+# Exact versions are locked in package-lock.json.
+
+# Runtime (install separately)
+# Node.js LTS — v18 or newer recommended
+
+# npm packages (installed via npm install)
+# express
+# cookie-parser
+# nodemon (devDependency)
